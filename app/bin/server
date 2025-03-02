@@ -1,0 +1,107 @@
+#!/usr/bin/env php
+<?php
+
+error_reporting(E_ALL & ~E_DEPRECATED);
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use GuzzleHttp\Exception\RequestException;
+use Monolog\Level;
+use Ratchet\MessageComponentInterface;
+use Ratchet\ConnectionInterface;
+use Ratchet\Http\HttpServer;
+use Ratchet\WebSocket\WsServer;
+use Ratchet\Server\IoServer;
+use React\EventLoop\Loop;
+use React\Socket\SocketServer;
+use React\Socket\SecureServer;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use GuzzleHttp\Client;
+
+class Chat implements MessageComponentInterface
+{
+    private Logger $logger;
+    private string $apiUrl;
+    private Client $httpClient;
+
+    public function __construct(Logger $logger, string $apiUrl)
+    {
+        $this->logger = $logger;
+        $this->apiUrl = $apiUrl;
+        $this->httpClient = new Client([
+            'verify' => false,
+            'timeout' => 2.0
+        ]);
+    }
+
+    public function onOpen(ConnectionInterface $conn): void
+    {
+        $this->logger->info("New connection: {$conn->resourceId}");
+    }
+
+    public function onMessage(ConnectionInterface $from, $msg): void
+    {
+        $this->logger->info("Forwarding message from connection {$from->resourceId} to API");
+        $this->sendToApi($msg);
+    }
+
+    public function onClose(ConnectionInterface $conn): void
+    {
+        $this->logger->info("Connection closed: {$conn->resourceId}");
+    }
+
+    public function onError(ConnectionInterface $conn, \Exception $e): void
+    {
+        $this->logger->error("Error: {$e->getMessage()}");
+        $conn->close();
+    }
+
+    private function sendToApi(string $message): void
+    {
+        try {
+            $response = $this->httpClient->post($this->apiUrl, [
+                'json' => ['message' => $message]
+            ]);
+            $this->logger->info("API response: " . $response->getStatusCode());
+        } catch (RequestException $e) {
+            if ($e->hasResponse()) {
+                $this->logger->error("API error: " . $e->getResponse()->getStatusCode() . ' - ' . $e->getResponse()->getBody()->getContents());
+            } else {
+                $this->logger->error("API request failed: " . $e->getMessage());
+            }
+        }
+    }
+}
+
+$logger = new Logger('chat');
+$logger->pushHandler(new StreamHandler(__DIR__ . '/../var/log/chat.log', Level::Debug));
+
+$apiUrl = 'http://chat_nginx/api/v1/message';
+
+$loop = Loop::get();
+
+$socket = new SocketServer('0.0.0.0:8989', [], $loop);
+
+$context = [
+    'local_cert'        => '/var/ssl/cert.pem',
+    'local_pk'          => '/var/ssl/key.pem',
+    'allow_self_signed' => true,
+    'verify_peer'       => false
+];
+
+$secureSocket = new SecureServer($socket, $loop, $context);
+
+$webServer = new IoServer(
+    new HttpServer(
+        new WsServer(
+            new Chat($logger, $apiUrl)
+        )
+    ),
+    $secureSocket,
+    $loop
+);
+
+$logger->info("WebSocket (WSS) server running on port 8989");
+
+$loop->run();

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Formularz rejestracji</title>
+    <link rel="stylesheet" href="css/registration.css">
+</head>
+<body>
+<div class="registration-container">
+    <div id="result-message"></div>
+    <form id="registration-form">
+        <h2>Rejestracja</h2>
+        <fieldset>
+            <legend>Dane użytkownika</legend>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="podaj email">
+                <small>Email będzie użyty do potwierdzenia rejestracji.</small>
+                <span class="error" id="email-error"></span>
+            </div>
+            <div class="form-group">
+                <label for="username">Nazwa użytkownika</label>
+                <input type="text" id="username" name="username" placeholder="podaj nazwę użytkownika">
+                <small>Nazwa użytkownika to sposób, w jaki się identyfikujesz. Możesz ją później zmienić.</small>
+                <span class="error" id="username-error"></span>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Hasło do konta</legend>
+            <div class="form-group">
+                <label for="password">Hasło</label>
+                <input type="password" id="password" name="password" placeholder="podaj hasło">
+                <small>Hasło musi mieć minimum 10 znaków, zawierać duże i małe litery, cyfry oraz znaki specjalne.</small>
+                <span class="error" id="password-error"></span>
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Potwierdź hasło</label>
+                <input type="password" id="confirm-password" name="confirm_password" placeholder="potwierdź hasło">
+                <span class="error" id="confirm-password-error"></span>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Zabezpieczenie</legend>
+            <div class="form-group">
+                <label>Wybierz metodę zabezpieczenia:</label>
+                <label><input type="radio" name="security-option" value="pin" checked> 6-cyfrowy PIN</label>
+                <label><input type="radio" name="security-option" value="short_password"> 10-znakowe krótkie hasło</label>
+            </div>
+            <div id="security-message" class="security-message"></div>
+            <div class="form-group" id="security-code-group">
+                <label for="security-code">Kod zabezpieczający</label>
+                <input type="password" id="security-code" name="security_code" placeholder="">
+                <span class="error" id="security-code-error"></span>
+                <small>Uwaga: Kod zabezpieczający (PIN lub krótkie hasło) nie jest zapisywany i nie można go później odzyskać.</small>
+            </div>
+        </fieldset>
+        <button type="submit" id="submit-form" class="submit-btn">Zarejestruj</button>
+    </form>
+</div>
+<script src="js/registration.js"></script>
+</body>
+</html>

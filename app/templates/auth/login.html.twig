@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Logowanie</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+<div class="login-container">
+    <form id="login-form">
+        <h2>Logowanie</h2>
+        <div class="form-group">
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" name="email" placeholder="podaj email">
+            <span class="error" id="login-email-error"></span>
+        </div>
+        <div class="form-group">
+            <label for="login-password">Hasło</label>
+            <input type="password" id="login-password" name="password" placeholder="podaj hasło">
+            <span class="error" id="login-password-error"></span>
+        </div>
+        <button type="submit" id="login-submit" class="submit-btn">Zaloguj</button>
+        <div class="form-group">
+            <a href="/reset-password" id="forgot-password">Przypomnij hasło</a>
+        </div>
+    </form>
+    <div id="login-result-message"></div>
+</div>
+<script src="js/login.js"></script>
+</body>
+</html>

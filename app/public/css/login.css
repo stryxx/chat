@@ -1,0 +1,83 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    margin: 0;
+    padding: 0;
+    color: #e0e0e0;
+}
+.login-container {
+    width: 50%;
+    max-width: 400px;
+    margin: 50px auto;
+    background: #1e1e1e;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(255,255,255,0.1);
+}
+form {
+    display: flex;
+    flex-direction: column;
+}
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+input[type="email"],
+input[type="password"] {
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 3px;
+    font-size: 14px;
+    background-color: #333;
+    color: #fff;
+}
+input:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+.error {
+    color: #ff6b6b;
+    font-size: 12px;
+    margin-top: 5px;
+}
+.submit-btn {
+    background-color: #007BFF;
+    border: none;
+    color: #fff;
+    padding: 10px 0;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+a#forgot-password {
+    color: #007BFF;
+    text-align: center;
+    margin-top: 10px;
+    text-decoration: none;
+}
+a#forgot-password:hover {
+    text-decoration: underline;
+}
+#login-result-message {
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+}

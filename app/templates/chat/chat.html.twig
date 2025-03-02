@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Talkie-Talkie</title>
+    <link rel="stylesheet" href="css/chat.css">
+</head>
+<body>
+<header class="chat-header">
+    <img src="/images/TT.png" alt="Talkie-Talkie Logo" class="chat-logo">
+    <h1>Talkie-Talkie</h1>
+</header>
+<div class="search-container">
+    <input type="text" id="user-search" placeholder="Wyszukaj użytkownika...">
+    <div id="autocomplete-results" class="autocomplete-results"></div>
+</div>
+<div class="chat-container">
+    <aside class="chat-list">
+        <div class="chat-list-header">
+            <h3>Nieodebrane wiadomości <span class="unread-icon">&#128276;</span></h3>
+            <div class="chat-sort">
+                <select id="chat-sort">
+                    <option value="name">Sortuj wg nazwy</option>
+                    <option value="type">Sortuj wg typu</option>
+                    <option value="last">Sortuj wg ostatniej wiadomości</option>
+                </select>
+            </div>
+        </div>
+        <ul class="chat-items"></ul>
+    </aside>
+    <main class="chat-conversation">
+        <div class="chat-tabs">
+            <ul id="chat-tabs"></ul>
+        </div>
+        <div class="chat-window">
+            <div class="chat-messages" id="chat-messages"></div>
+        </div>
+        <div class="chat-input-area">
+            <textarea id="chat-input" placeholder="Napisz wiadomość..."></textarea>
+            <div class="chat-input-tools">
+                <button type="button" class="tool-btn" id="upload-file">&#128206;</button>
+                <button type="button" class="tool-btn" id="add-emoji">&#128515;</button>
+            </div>
+        </div>
+    </main>
+    <aside class="chat-menu">
+        <button class="menu-toggle" id="menu-toggle">&#9776;</button>
+        <div class="menu-content">
+            <h4>Opcje rozmowy</h4>
+            <ul>
+                <li><button type="button" class="menu-option">Konfiguracja</button></li>
+                <li><button type="button" class="menu-option">Blokada użytkownika</button></li>
+                <li><button type="button" class="menu-option">Wyciszenie</button></li>
+            </ul>
+        </div>
+    </aside>
+    <footer class="chat-userbar">
+        <div class="user-info">
+            <img src="/images/default-avatar.png" alt="Avatar">
+            <span class="user-name">Jan Kowalski</span>
+        </div>
+        <div class="user-actions">
+            <button id="settings-btn">Ustawienia</button>
+            <button id="logout-btn">Wyloguj</button>
+        </div>
+    </footer>
+</div>
+<script src="js/chat.js"></script>
+</body>
+</html>
