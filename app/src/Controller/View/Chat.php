@@ -13,6 +13,10 @@ class Chat extends AbstractController
     #[Route('/screen', name: 'screen', methods: ['GET'])]
     public function __invoke(): Response
     {
-        return $this->render('chat/chat.html.twig');
+        if ($this->getUser()) {
+            return $this->render('chat/chat.html.twig');
+        }
+
+        return $this->redirectToRoute('app_login');
     }
 }
